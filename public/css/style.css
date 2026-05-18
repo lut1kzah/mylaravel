@@ -1,0 +1,471 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #1a1a1a;
+    min-height: 100vh;
+}
+
+/* Шапка */
+.header {
+    background: #1a1a1a;
+    padding: 15px 30px;
+    border-bottom: 3px solid #FF6B00;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #FF6B00;
+    text-decoration: none;
+}
+
+.logo span {
+    color: white;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav a:hover {
+    color: #FF6B00;
+}
+
+.user-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.user-name {
+    color: #FF6B00;
+    font-weight: bold;
+}
+
+.btn {
+    padding: 8px 20px;
+    background: #FF6B00;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    background: #e05e00;
+}
+
+.logout-btn {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #555;
+}
+
+/* Основной контент */
+.content {
+    padding: 30px;
+}
+
+/* Страница меню */
+.menu-wrapper {
+    display: flex;
+    gap: 30px;
+}
+
+/* Левое меню */
+.menu-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+.menu-sidebar h3 {
+    font-size: 20px;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #FF6B00;
+}
+
+.category-list {
+    list-style: none;
+}
+
+.category-list li {
+    margin-bottom: 12px;
+}
+
+.category-list a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.category-list a:hover {
+    background: #FF6B00;
+    color: white;
+}
+
+/* Основной контент меню */
+.menu-main {
+    flex: 1;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 36px;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.category-section {
+    margin-bottom: 50px;
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.category-title {
+    font-size: 28px;
+    color: #FF6B00;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #FF6B00;
+}
+
+/* Товары - кнопка внизу */
+.products-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.product-card {
+    flex: 1 1 280px;
+    max-width: 320px;
+    background: #f9f9f9;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    border: 2px solid #555555;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-color: #FF6B00;
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+}
+
+.product-desc {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.add-to-cart {
+    width: 100%;
+    background: #FF6B00;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: auto;
+}
+
+.add-to-cart:hover {
+    background: #e05e00;
+}
+
+/* Цена и вес в одной строке */
+.product-price-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+}
+
+.product-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #FF6B00;
+}
+
+.product-weight {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Напитки - уменьшенные картинки */
+.drink-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drink-image img {
+    width: 2000px !important;
+    height: 200px !important;
+    object-fit: contain !important;
+}
+
+/* Формы */
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+}
+
+input:focus {
+    border-color: #FF6B00;
+    outline: none;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.success {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    background: #FF6B00;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .menu-wrapper {
+        flex-direction: column;
+    }
+
+    .menu-sidebar {
+        width: 100%;
+        position: static;
+    }
+
+    .category-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .products-grid {
+        justify-content: center;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+}
+/* Формы - центр экрана */
+.container {
+    min-height: calc(100vh - 150px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #FF6B00;
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.success {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #FF6B00;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background: #e05e00;
+    transform: translateY(-2px);
+}
+
+.login-link, .register-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.login-link a, .register-link a {
+    color: #FF6B00;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-link a:hover, .register-link a:hover {
+    text-decoration: underline;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+.row .form-group {
+    flex: 1;
+}
