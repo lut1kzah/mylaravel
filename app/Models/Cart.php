@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     protected $table = 'Carts';
-    public $timestamps = false;
-    public $incrementing = false;
+    protected $primaryKey = 'id';
+    public $timestamps = true;
 
-    protected $fillable = ['user_id', 'id_product', 'quantity'];
+    protected $fillable = ['user_id', 'product_id', 'quantity'];
 
     public function user()
     {
@@ -19,6 +19,6 @@ class Cart extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'id_product', 'product_id');
+        return $this->belongsTo(Product::class, 'product_id', 'product_id');
     }
 }

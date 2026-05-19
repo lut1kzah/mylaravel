@@ -36,6 +36,18 @@
                 <input type="text" name="middle_name" value="{{ old('middle_name') }}">
                 @error('middle_name') <div class="error">{{ $message }}</div> @enderror
             </div>
+            <div class="form-group">
+                <label>Пол *</label>
+                <div style="display: flex; gap: 20px; margin-top: 10px;">
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="radio" name="gender" value="1" required> Мужчина
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="radio" name="gender" value="0" required> Женщина
+                    </label>
+                </div>
+                @error('gender') <div class="error">{{ $message }}</div> @enderror
+            </div>
 
             <div class="form-group">
                 <label>Телефон *</label>

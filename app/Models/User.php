@@ -25,6 +25,7 @@ class User extends Authenticatable
         'last_name',
         'first_name',
         'middle_name',
+        'gender',
         'bonus_balance',
         'current_level',
         'total_spent',

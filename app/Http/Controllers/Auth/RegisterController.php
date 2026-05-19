@@ -25,6 +25,7 @@ class RegisterController extends Controller
             'last_name' => 'required|string|max:50',
             'first_name' => 'required|string|max:50',
             'middle_name' => 'nullable|string|max:50',
+            'gender' => 'required|in:0,1',
             'password' => 'required|min:6|confirmed',
         ]);
 
@@ -36,6 +37,7 @@ class RegisterController extends Controller
             'last_name' => $validated['last_name'],
             'first_name' => $validated['first_name'],
             'middle_name' => $validated['middle_name'] ?? null,
+            'gender' => $validated['gender'],  // добавить эту строку
             'bonus_balance' => 0,
             'current_level' => 'BRONZE',
             'total_spent' => 0,

@@ -50,7 +50,10 @@
                                             <span class="product-weight">{{ $product->weight }}</span>
                                         @endif
                                     </div>
-                                    <button class="add-to-cart" onclick="alert('Корзина скоро будет готова 📦')">Добавить</button>
+                                    <form method="POST" action="{{ route('cart.add', $product->product_id) }}">
+                                        @csrf
+                                        <a href="{{ route('cart.add', $product->product_id) }}" class="add-to-cart">Добавить</a>
+                                    </form>
                                 </div>
                             </div>
                         @empty

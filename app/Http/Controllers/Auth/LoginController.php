@@ -20,7 +20,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect('/')->with('success', 'Добро пожаловать!');
+            return redirect('/profile')->with('success', 'Добро пожаловать!');
         }
 
         return back()->withErrors([
