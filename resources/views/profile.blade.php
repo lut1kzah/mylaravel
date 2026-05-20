@@ -5,7 +5,7 @@
 @section('content')
     <div class="profile-container">
         <div class="profile-card">
-            <h2>👤 Личный кабинет</h2>
+            <h1>Личный кабинет</h1>
 
             <div class="profile-info">
                 <div class="info-row">
@@ -67,8 +67,8 @@
             </div>
 
             <div class="profile-actions">
-                <a href="/" class="btn">На главную</a>
                 <a href="/menu" class="btn">В меню</a>
+                <a href="{{ route('profile.orders') }}" class="btn">История заказов</a>
             </div>
         </div>
     </div>

@@ -1,84 +1,66 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Регистрация - Безумно</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-</head>
-<body>
-<div class="container">
-    <div class="card">
-        <h2>🍔 Регистрация</h2>
+@extends('layouts.app')
 
-        @if(session('success'))
-            <div class="success">{{ session('success') }}</div>
-        @endif
+@section('title', 'Регистрация')
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+@section('content')
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2 class="auth-title">Регистрация</h2>
 
-            <div class="row">
-                <div class="form-group">
-                    <label>Фамилия *</label>
-                    <input type="text" name="last_name" value="{{ old('last_name') }}" required>
-                    @error('last_name') <div class="error">{{ $message }}</div> @enderror
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+
+                <div class="row">
+                    <div class="form-group">
+                        <input type="text" name="last_name" placeholder="Фамилия" value="{{ old('last_name') }}" required>
+                        @error('last_name') <div class="error">{{ $message }}</div> @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" name="first_name" placeholder="Имя" value="{{ old('first_name') }}" required>
+                        @error('first_name') <div class="error">{{ $message }}</div> @enderror
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Имя *</label>
-                    <input type="text" name="first_name" value="{{ old('first_name') }}" required>
-                    @error('first_name') <div class="error">{{ $message }}</div> @enderror
+                    <input type="text" name="middle_name" placeholder="Отчество" value="{{ old('middle_name') }}">
+                    @error('middle_name') <div class="error">{{ $message }}</div> @enderror
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label>Отчество</label>
-                <input type="text" name="middle_name" value="{{ old('middle_name') }}">
-                @error('middle_name') <div class="error">{{ $message }}</div> @enderror
-            </div>
-            <div class="form-group">
-                <label>Пол *</label>
-                <div style="display: flex; gap: 20px; margin-top: 10px;">
-                    <label style="display: flex; align-items: center; gap: 5px;">
-                        <input type="radio" name="gender" value="1" required> Мужчина
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 5px;">
-                        <input type="radio" name="gender" value="0" required> Женщина
-                    </label>
+                <div class="form-group">
+                    <input type="tel" name="phone" placeholder="Телефон" value="{{ old('phone') }}" required>
+                    @error('phone') <div class="error">{{ $message }}</div> @enderror
                 </div>
-                @error('gender') <div class="error">{{ $message }}</div> @enderror
-            </div>
 
-            <div class="form-group">
-                <label>Телефон *</label>
-                <input type="tel" name="phone" placeholder="+7XXXXXXXXXX" value="{{ old('phone') }}" required>
-                @error('phone') <div class="error">{{ $message }}</div> @enderror
-            </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                    @error('email') <div class="error">{{ $message }}</div> @enderror
+                </div>
 
-            <div class="form-group">
-                <label>Email *</label>
-                <input type="email" name="email" value="{{ old('email') }}" required>
-                @error('email') <div class="error">{{ $message }}</div> @enderror
-            </div>
+                <div class="form-group">
+                    <label class="gender-label">Пол</label>
+                    <div class="gender-group">
+                        <label><input type="radio" name="gender" value="1" required> Мужчина</label>
+                        <label><input type="radio" name="gender" value="0" required> Женщина</label>
+                    </div>
+                    @error('gender') <div class="error">{{ $message }}</div> @enderror
+                </div>
 
-            <div class="form-group">
-                <label>Пароль *</label>
-                <input type="password" name="password" required>
-                @error('password') <div class="error">{{ $message }}</div> @enderror
-            </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Пароль" required>
+                    @error('password') <div class="error">{{ $message }}</div> @enderror
+                </div>
 
-            <div class="form-group">
-                <label>Подтверждение пароля *</label>
-                <input type="password" name="password_confirmation" required>
-            </div>
+                <div class="form-group">
+                    <input type="password" name="password_confirmation" placeholder="Подтверждение пароля" required>
+                </div>
 
-            <button type="submit">Зарегистрироваться</button>
+                <button type="submit" class="auth-btn">Зарегистрироваться</button>
 
-            <div class="login-link">
-                Уже есть аккаунт? <a href="{{ route('login') }}">Войти</a>
-            </div>
-        </form>
+                <div class="auth-link">
+                    <a href="{{ route('login') }}">Уже есть аккаунт? Войти</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-</body>
-</html>
+@endsection

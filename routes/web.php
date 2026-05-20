@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return view('welcome');
+    }
+    return redirect()->route('login');
 })->name('home');
 
 use App\Http\Controllers\Auth\RegisterController;
@@ -34,3 +38,12 @@ Route::get('/cart/add/{productId}', [CartController::class, 'add'])->name('cart.
 Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update')->middleware('auth');
 Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove')->middleware('auth');
 Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear')->middleware('auth');
+
+use App\Http\Controllers\CheckoutController;
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout')->middleware('auth');
+Route::post('/checkout/apply-promocode', [CheckoutController::class, 'applyPromocode'])->name('checkout.applyPromocode')->middleware('auth');
+Route::post('/checkout/apply-bonus', [CheckoutController::class, 'applyBonus'])->name('checkout.applyBonus')->middleware('auth');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store')->middleware('auth');
+Route::get('/checkout/success/{id}', [CheckoutController::class, 'success'])->name('checkout.success')->middleware('auth');
+
+Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders')->middleware('auth');

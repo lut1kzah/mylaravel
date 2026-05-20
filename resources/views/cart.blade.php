@@ -82,7 +82,7 @@
                         <button type="submit" class="clear-cart-btn">Очистить корзину</button>
                     </form>
                     <a href="{{ route('menu') }}" class="continue-btn">Продолжить покупки</a>
-                    <a href="#" class="checkout-btn">Оформить заказ</a>
+                    <a href="{{ route('checkout') }}" class="checkout-btn">Оформить заказ</a>
                 </div>
             </div>
         @endif
