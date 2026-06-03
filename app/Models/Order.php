@@ -19,9 +19,9 @@ class Order extends Model
         'used_promocode_id',
         'used_bonus_points',
         'earned_bonus_points',
-        'status'
+        'status',
+        'pickup_point_id',  // ← ДОБАВЬ ЭТУ СТРОКУ
     ];
-
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
@@ -35,5 +35,11 @@ class Order extends Model
     public function promocode()
     {
         return $this->belongsTo(Promocode::class, 'used_promocode_id', 'promocode_id');
+    }
+    // app/Models/Order.php - добавь этот метод
+
+    public function pickupPoint()
+    {
+        return $this->belongsTo(PickupPoint::class, 'pickup_point_id', 'point_id');
     }
 }

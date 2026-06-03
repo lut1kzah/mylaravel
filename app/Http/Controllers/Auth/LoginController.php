@@ -1,10 +1,12 @@
 <?php
+// app/Http/Controllers/Auth/LoginController.php
 
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     public function showForm()
@@ -20,7 +22,16 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect('/profile')->with('success', 'Добро пожаловать!');
+            $user = Auth::user();
+
+            // Редирект в зависимости от роли
+            if ($user->role_id == 2 || $user->role_id == 3) {
+                // Менеджер или админ -> в панель управления
+                return redirect()->route('manager.orders')->with('success', 'Добро пожаловать в панель управления!');
+            }
+
+            // Обычный пользователь -> в профиль
+            return redirect()->route('profile')->with('success', 'Добро пожаловать!');
         }
 
         return back()->withErrors([

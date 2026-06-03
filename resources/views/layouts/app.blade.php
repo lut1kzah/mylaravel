@@ -10,7 +10,9 @@
 
 <!-- Фоновые надписи для всех страниц -->
 <div class="guest-background" id="guestBackground"></div>
-
+@if(auth()->check() && auth()->user()->role_id == 2)
+    <a href="{{ route('manager.orders') }}">Управление заказами</a>
+@endif
 <!-- Шапка для авторизованных -->
 @auth
     <div class="header">
@@ -19,6 +21,7 @@
             <div class="nav">
                 <a href="{{ route('menu') }}">Меню</a>
                 <a href="/cart">Корзина</a>
+                <a href="{{ route('active.orders') }}">Мои заказы</a>
                 <a href="{{ route('profile') }}">Профиль</a>
             </div>
             <div class="user-info">

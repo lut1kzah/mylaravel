@@ -87,7 +87,17 @@
                             <option value="card">Картой при получении</option>
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label>📍 Точка самовывоза</label>
+                        <select name="pickup_point_id" class="payment-select" required>
+                            <option value="">Выберите адрес</option>
+                            @foreach($pickupPoints as $point)
+                                <option value="{{ $point->point_id }}">
+                                    {{ $point->address }} | ☎️ {{ $point->phone }} | 🕒 {{ $point->working_hours }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <button type="submit" class="submit-order-btn">Подтвердить заказ</button>
                 </form>
             </div>

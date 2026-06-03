@@ -1,4 +1,5 @@
 <?php
+// app/Http/Controllers/CheckoutController.php
 
 namespace App\Http\Controllers;
 
@@ -8,12 +9,13 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Promocode;
+use App\Models\PickupPoint;
+use App\Models\BonusTransaction;
 
 class CheckoutController extends Controller
 {
     public function index()
     {
-
         $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
         $subtotal = 0;
         foreach ($cartItems as $item) {
@@ -23,21 +25,22 @@ class CheckoutController extends Controller
 
         $user = Auth::user();
         $bonusBalance = $user->bonus_balance;
-        $maxBonusPercent = 25;
+        $maxBonusPercent = 30;
         $maxBonusPoints = min($bonusBalance, $subtotal * $maxBonusPercent / 100);
 
         $discountAmount = session('discount_amount', 0);
         $bonusUsed = session('bonus_used', 0);
         $finalSum = $subtotal - $discountAmount - $bonusUsed;
 
-        return view('checkout', compact('cartItems', 'subtotal', 'bonusBalance', 'maxBonusPoints', 'maxBonusPercent', 'finalSum'));
+        $pickupPoints = PickupPoint::all();
+
+        return view('checkout', compact('cartItems', 'subtotal', 'bonusBalance', 'maxBonusPoints', 'maxBonusPercent', 'finalSum', 'pickupPoints'));
     }
 
     public function applyPromocode(Request $request)
     {
         $request->validate(['promocode' => 'required|string']);
 
-        // ✅ Берём полную сумму из сессии
         $subtotal = (float) session('checkout_subtotal', 0);
 
         $promocode = Promocode::where('code', $request->promocode)
@@ -89,10 +92,18 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['payment_method' => 'required|in:cash,card']);
+        $request->validate([
+            'payment_method' => 'required|in:cash,card',
+            'pickup_point_id' => 'required|exists:PickupPoints,point_id'
+        ]);
 
         $user = Auth::user();
         $cartItems = Cart::where('user_id', $user->user_id)->with('product')->get();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart')->with('error', 'Корзина пуста');
+        }
+
         $subtotal = 0;
         foreach ($cartItems as $item) {
             $subtotal += $item->product->price * $item->quantity;
@@ -102,7 +113,6 @@ class CheckoutController extends Controller
         $bonusUsed = session('bonus_used', 0);
         $finalSum = $subtotal - $discountAmount - $bonusUsed;
 
-        // Находим промокод
         $promocode = null;
         if (session('applied_promocode')) {
             $promocode = Promocode::where('code', session('applied_promocode'))->first();
@@ -117,6 +127,7 @@ class CheckoutController extends Controller
             'used_bonus_points' => $bonusUsed,
             'earned_bonus_points' => floor($finalSum * 0.05),
             'status' => 'NEW',
+            'pickup_point_id' => $request->pickup_point_id,
         ]);
 
         foreach ($cartItems as $item) {
@@ -129,8 +140,20 @@ class CheckoutController extends Controller
             ]);
         }
 
-        // Обновляем бонусы пользователя
-        $user->bonus_balance = $user->bonus_balance - $bonusUsed + floor($finalSum * 0.05);
+        // 1. Записываем списание бонусов (если были использованы)
+        if ($bonusUsed > 0) {
+            BonusTransaction::create([
+                'id_user' => $user->user_id,
+                'id_order' => $order->order_id,
+                'amount' => -$bonusUsed,
+                'type' => 'SPENT',
+                'created_at' => now(),
+            ]);
+        }
+
+        // Обновляем бонусы пользователя (списываем использованные)
+        // Начисление бонусов произойдёт позже, когда менеджер подтвердит выдачу заказа
+        $user->bonus_balance = $user->bonus_balance - $bonusUsed;
         $user->total_spent += $finalSum;
         $user->save();
 

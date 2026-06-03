@@ -47,3 +47,14 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 Route::get('/checkout/success/{id}', [CheckoutController::class, 'success'])->name('checkout.success')->middleware('auth');
 
 Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders')->middleware('auth');
+
+use App\Http\Controllers\ManagerController;
+// Менеджер-панель
+Route::prefix('manager')->middleware('auth')->group(function () {
+    Route::get('/orders', [ManagerController::class, 'orders'])->name('manager.orders');
+    Route::patch('/orders/{id}/status', [ManagerController::class, 'updateStatus'])->name('manager.updateStatus');
+    Route::get('/orders/{id}', [ManagerController::class, 'show'])->name('manager.order.show');
+});
+
+// Активные заказы пользователя
+Route::get('/active-orders', [ProfileController::class, 'activeOrders'])->name('active.orders')->middleware('auth');

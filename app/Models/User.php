@@ -40,4 +40,10 @@ class User extends Authenticatable
     {
         return $this->password_hash;
     }
+    // app/Models/User.php - добавь
+
+    public function pickupPoint()
+    {
+        return $this->belongsTo(PickupPoint::class, 'pickup_point_id', 'point_id');
+    }
 }
