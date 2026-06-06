@@ -44,8 +44,9 @@
     @endif
 
     @yield('content')
-</div>
 
+</div>
+@include('layouts.footer')
 <script>
     // Автоматическое скрытие сообщений через 3 секунды
     setTimeout(function() {
@@ -162,5 +163,6 @@
         });
     });
 </script>
+
 </body>
 </html>

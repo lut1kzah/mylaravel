@@ -102,3 +102,12 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::put('/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.users.update');
     Route::post('/users/{id}/adjust-bonus', [\App\Http\Controllers\Admin\UserController::class, 'adjustBonus'])->name('admin.users.adjustBonus');
 });
+use App\Http\Controllers\PageController;
+
+// Страницы
+Route::get('/faq', [PageController::class, 'faq'])->name('faq');
+Route::get('/reviews', [PageController::class, 'reviews'])->name('reviews');
+Route::get('/terms', [PageController::class, 'terms'])->name('terms');
+Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
+// Добавь после остальных маршрутов PageController
+Route::post('/reviews/store', [PageController::class, 'storeReview'])->name('reviews.store');
