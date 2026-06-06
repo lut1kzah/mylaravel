@@ -25,8 +25,13 @@ class LoginController extends Controller
             $user = Auth::user();
 
             // Редирект в зависимости от роли
-            if ($user->role_id == 2 || $user->role_id == 3) {
-                // Менеджер или админ -> в панель управления
+            if ($user->role_id == 3) {
+                // Администратор -> в админ-панель
+                return redirect()->route('admin.promocodes.index')->with('success', 'Добро пожаловать в админ-панель!');
+            }
+
+            if ($user->role_id == 2) {
+                // Менеджер -> в панель управления заказами
                 return redirect()->route('manager.orders')->with('success', 'Добро пожаловать в панель управления!');
             }
 

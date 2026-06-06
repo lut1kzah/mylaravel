@@ -58,3 +58,47 @@ Route::prefix('manager')->middleware('auth')->group(function () {
 
 // Активные заказы пользователя
 Route::get('/active-orders', [ProfileController::class, 'activeOrders'])->name('active.orders')->middleware('auth');
+
+use App\Http\Controllers\Admin\PromocodeController;
+
+Route::prefix('admin')->middleware('auth')->group(function () {
+    // Статистика (главная админки)
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::get('/promocodes', [PromocodeController::class, 'index'])->name('admin.promocodes.index');
+    Route::get('/promocodes/create', [PromocodeController::class, 'create'])->name('admin.promocodes.create');
+    Route::post('/promocodes', [PromocodeController::class, 'store'])->name('admin.promocodes.store');
+    Route::get('/promocodes/{id}/edit', [PromocodeController::class, 'edit'])->name('admin.promocodes.edit');
+    Route::put('/promocodes/{id}', [PromocodeController::class, 'update'])->name('admin.promocodes.update');
+    Route::patch('/promocodes/{id}/toggle', [PromocodeController::class, 'toggle'])->name('admin.promocodes.toggle');
+    Route::get('/promocodes/{id}/stats', [PromocodeController::class, 'stats'])->name('admin.promocodes.stats');
+});
+// Временно, пока не созданы контроллеры
+Route::prefix('admin')->middleware('auth')->group(function () {
+    // Товары
+    Route::get('/products', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('admin.products.index');
+    Route::get('/products/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('admin.products.create');
+    Route::post('/products', [\App\Http\Controllers\Admin\ProductController::class, 'store'])->name('admin.products.store');
+    Route::get('/products/{id}/edit', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::put('/products/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin.products.update');
+    Route::patch('/products/{id}/toggle', [\App\Http\Controllers\Admin\ProductController::class, 'toggle'])->name('admin.products.toggle');
+
+    // ПВЗ
+    Route::resource('pickup-points', \App\Http\Controllers\Admin\PickupPointController::class)
+        ->except(['show'])
+        ->names([
+            'index' => 'admin.pickup-points.index',
+            'create' => 'admin.pickup-points.create',
+            'store' => 'admin.pickup-points.store',
+            'edit' => 'admin.pickup-points.edit',
+            'update' => 'admin.pickup-points.update',
+            'destroy' => 'admin.pickup-points.destroy',
+        ]);
+
+    // Пользователи
+    Route::get('/users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.users.show');
+    Route::get('/users/{id}/edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.users.update');
+    Route::post('/users/{id}/adjust-bonus', [\App\Http\Controllers\Admin\UserController::class, 'adjustBonus'])->name('admin.users.adjustBonus');
+});
