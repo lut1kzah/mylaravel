@@ -46,7 +46,9 @@
     @yield('content')
 
 </div>
-@include('layouts.footer')
+@if(!in_array(Route::currentRouteName(), ['login', 'register']))
+    @include('layouts.footer')
+@endif
 <script>
     // Автоматическое скрытие сообщений через 3 секунды
     setTimeout(function() {
